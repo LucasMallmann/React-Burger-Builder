@@ -13,6 +13,7 @@ const INGREDIENTS_PRICES = {
   bacon: 0.7
 };
 
+
 class BurgerBuilder extends Component {
   state = {
     ingredients: {
@@ -94,15 +95,19 @@ class BurgerBuilder extends Component {
     console.log(this.state.purchasable);
   }
 
-  purchaseHandlers() {
+  purchaseHandlers = () => {
     this.setState({ purchasing: true });
   }
 
+  // Vai alterar o estado de 'comprando' para falso.
+  // Isso irá cancelar o modal
   purchaseCancelHandler = () => {
-    this.setState({
-      purchasing: false
-    });
+    this.setState( { purchasing: false } );
   };
+
+  purchaseContinueHandler = () => {
+    alert('you continue');
+  }
 
   render() {
     // Faz uma cópia do state
@@ -121,7 +126,10 @@ class BurgerBuilder extends Component {
           show={this.state.purchasing}
           modalClosed={this.purchaseCancelHandler}
         >
-          <OrderSummary ingredients={this.state.ingredients} />
+          <OrderSummary ingredients={this.state.ingredients} 
+          purchaseCancel={this.purchaseCancelHandler}
+          purchaseContinue={this.purchaseContinueHandler}
+          totalPrice={this.state.totalPrice}/>
         </Modal>
 
         {/* O Hamburger mesmo rsrs */}
@@ -135,7 +143,7 @@ class BurgerBuilder extends Component {
           price={this.state.totalPrice}
           purchasable={this.state.purchasable}
           // ALTERAR O ESTADO DE COMPRANDO, PARA SUMIR COM O MODAL
-          purchasing={() => this.purchaseHandlers()}
+          purchasing={this.purchaseHandlers}
         />
       </Aux>
     );

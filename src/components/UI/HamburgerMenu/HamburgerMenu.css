@@ -1,0 +1,27 @@
+.HamburgerMenu {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.Bar1, .Bar2, .Bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #fff;
+  margin: 6px 0;
+  transition: 0.4s;
+  border-radius: 5px;
+}
+
+.Change .Bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.Change .Bar2 {
+  opacity: 0;
+}
+
+.Change .Bar3 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}

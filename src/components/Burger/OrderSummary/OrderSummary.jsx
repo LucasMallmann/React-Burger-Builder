@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Aux from "../../../hoc/Aux";
 import Button from "../../UI/Button/Button";
@@ -29,13 +30,17 @@ const orderSummary = props => {
       </p>
 
       <p>Continue to Checkout?</p>
+      {/* <Link to=''> */}
       <Button btnType="Danger" clicked={props.purchaseCancel}>
         CANCEL
       </Button>
+      {/* </Link> */}
 
+      {/* <Link to='/checkout'> */}
       <Button btnType="Success" clicked={props.purchaseContinue}>
         CONTINUE
       </Button>
+      {/* </Link> */}
     </Aux>
   );
 };

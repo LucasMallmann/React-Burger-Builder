@@ -1,0 +1,19 @@
+.ContactDataForm {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 2px 3px 20px #ccc;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.Input {
+  display: block;
+  width: 80%;
+  margin: 8px auto;
+}
+
+/* 
+@media (min-width: 500px) {
+  .ContactDataForm{margin: 500px}
+} */

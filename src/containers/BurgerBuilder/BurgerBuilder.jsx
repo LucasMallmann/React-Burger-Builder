@@ -19,8 +19,9 @@ const INGREDIENTS_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
+    // ingredients: null,
     ingredients: null,
-    totalPrice: 4,
+    totalPrice: 0,
     purchasable: false,
     purchasing: false,
     loading: false,
@@ -29,7 +30,7 @@ class BurgerBuilder extends Component {
 
   componentDidMount() {
     axios
-      .get("https://react-my-burger-aade8.firebaseio.com/ingredients.json")
+      .get("/ingredients.json")
       .then(response => {
         this.setState({ ingredients: response.data });
       })
@@ -119,36 +120,21 @@ class BurgerBuilder extends Component {
    * It is going to post data to the server
    */
   purchaseContinueHandler = () => {
-    // TODO: IMPLEMENT A POST IN THE DATABASE
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      totalPrice: this.state.totalPrice,
-      customer: {
-        name: "Lucas Mallmann",
-        adress: {
-          street: "Cruzeiro Test hehe",
-          zipCode: "1237813"
-        },
-        email: "lucas@email.com"
-      },
-      deliveryMethod: "fastest"
-    };
-
-    // It could be any endpoint I want
-    axios
-      .post("order.json", order)
-      .then(response => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(response);
-      })
-      .catch(err => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(err);
-      });
+    const queryParams = [];
+    for(let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+    }
+    
+    queryParams.push('price=' + this.state.totalPrice);
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString
+    });
   };
 
   render() {
+
     // Faz uma cópia do state
     const disabledInfo = {
       ...this.state.ingredients

@@ -17,9 +17,6 @@ const buildControls = props => {
         Current Price: <strong>{props.price.toFixed(2)}</strong>
       </p>
       {controls.map(control => (
-        // Vai passar como parâmetro uma chave pois está em um loop
-        // O label para saber qual é o ingrediente
-        // E também a ação de adicionar um ingrediente, passada por props
         <BuildControl
           key={control.label}
           label={control.label}
@@ -30,9 +27,12 @@ const buildControls = props => {
       ))}
 
       {/* Button para mostrar o modal */}
-      <button className={classes.OrderButton} disabled={!props.purchasable}
-      // onclick vai alterar o estado de 'purchasing' no componente burger builder
-      onClick={props.purchasing}>
+      <button
+        className={classes.OrderButton}
+        disabled={!props.purchasable}
+        // onclick vai alterar o estado de 'purchasing' no componente burger builder
+        onClick={props.purchasing}
+      >
         Order Now
       </button>
     </div>

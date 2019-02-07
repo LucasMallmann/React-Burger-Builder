@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import ContactDataForm from "../../../components/Order/ContactData/ContactDataForm";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -50,7 +51,11 @@ class ContactData extends Component {
           type: "text",
           placeholder: "Country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: "input",
@@ -81,18 +86,17 @@ class ContactData extends Component {
         value: ""
       }
     },
-    loading: false,
-    price: 0
+    loading: false
   };
 
-  checkValidity (value, rules) {
+  checkValidity(value, rules) {
     let isValid = false;
 
     if (rules.required) {
-      isValid = value.trim() !== '';
+      isValid = value.trim() !== "";
     }
 
-    return isValid
+    return isValid;
   }
 
   orderClickedHandler = event => {
@@ -110,7 +114,7 @@ class ContactData extends Component {
 
     const order = {
       ingredients: this.props.ingredients,
-      totalPrice: this.props.totalPrice,
+      totalPrice: this.props.price,
       orderData: formData
     };
 
@@ -120,7 +124,6 @@ class ContactData extends Component {
       .then(response => {
         this.setState({ loading: false });
         console.log(response);
-        // Redirecionar para outra página
         this.props.history.push("/");
       })
       .catch(err => {
@@ -131,23 +134,19 @@ class ContactData extends Component {
 
   selectChangedHandler = (event, inputId) => {
     const updatedOrderForm = { ...this.state.orderForm };
-    // O Element é um objeto que vai conter o orderForm element aninhado.
-    // country: {
-    //   elementType: "input",
-    //   elementConfig: {
-    //     type: "text",
-    //     placeholder: "Country"
-    //   },
-    //   value: ""
-    // }
     const updateOrderFormElement = {
       ...updatedOrderForm[inputId]
     };
     updateOrderFormElement.value = event.target.value;
-    updateOrderFormElement.valid = this.checkValidity(updateOrderFormElement.value, updateOrderFormElement.validation);
+
+    console.log(updatedOrderForm);
+
+    updateOrderFormElement.valid = this.checkValidity(
+      updateOrderFormElement.value,
+      updateOrderFormElement.validation
+    );
     updatedOrderForm[inputId] = updateOrderFormElement;
 
-    console.log(updateOrderFormElement);
 
     this.setState({
       orderForm: updatedOrderForm
@@ -170,4 +169,11 @@ class ContactData extends Component {
   }
 }
 
-export default withRouter(ContactData);
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    price: state.totalPrice
+  };
+}
+
+export default connect(mapStateToProps)(withRouter(ContactData));

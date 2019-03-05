@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import ContactDataForm from "../../../components/Order/ContactData/ContactDataForm";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import axios from "../../../axios-orders";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+
+import * as actions from "../../../store/actions/index";
 
 class ContactData extends Component {
   state = {
@@ -101,7 +104,6 @@ class ContactData extends Component {
 
   orderClickedHandler = event => {
     event.preventDefault();
-    // TODO: IMPLEMENT A POST IN THE DATABASE
     this.setState({ loading: true });
 
     const formData = {};
@@ -110,26 +112,14 @@ class ContactData extends Component {
       formData[inputId] = this.state.orderForm[inputId].value;
     }
 
-    console.log(formData);
-
     const order = {
       ingredients: this.props.ingredients,
       totalPrice: this.props.price,
-      orderData: formData
+      orderData: formData,
+      userId: this.props.userId
     };
 
-    // It could be any endpoint I want
-    axios
-      .post("order.json", order)
-      .then(response => {
-        this.setState({ loading: false });
-        console.log(response);
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        this.setState({ loading: false });
-        console.log(err);
-      });
+    this.props.onOrderBurger(order, this.props.token);
   };
 
   selectChangedHandler = (event, inputId) => {
@@ -147,14 +137,13 @@ class ContactData extends Component {
     );
     updatedOrderForm[inputId] = updateOrderFormElement;
 
-
     this.setState({
       orderForm: updatedOrderForm
     });
   };
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return <Spinner />;
     } else {
       return (
@@ -171,9 +160,22 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId
   };
-}
+};
 
-export default connect(mapStateToProps)(withRouter(ContactData));
+const mapDispatchToProps = dispatch => {
+  return {
+    onOrderBurger: (orderData, token) =>
+      dispatch(actions.purchaseBurger(orderData, token))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withErrorHandler(ContactData, axios)));

@@ -9,19 +9,21 @@ import Aux from "../../../hoc/Aux";
 import classes from "./Sidedrawer.css";
 
 const sideDrawer = props => {
-
   let openCloseToogle = props.open ? classes.Open : classes.Close;
 
   return (
     <Aux>
       <Backdrop show={props.open} clicked={props.closed} />
 
-      <div className={[classes.Sidedrawer, openCloseToogle].join(" ")} >
+      <div
+        className={[classes.Sidedrawer, openCloseToogle].join(" ")}
+        onClick={props.closed}
+      >
         <div className={classes.Logo}>
           <Logo />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={props.isAuth} />
         </nav>
       </div>
     </Aux>

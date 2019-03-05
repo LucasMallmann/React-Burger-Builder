@@ -15,7 +15,7 @@ const toolbar = (props) => (
 
     <nav className={classes.DesktopOnly}>
       {/* Barra de Navegação com seus links reutilizáveis */}
-      <NavigationItems />
+      <NavigationItems isAuthenticated={props.isAuth}/>
     </nav>
   </header>
 );

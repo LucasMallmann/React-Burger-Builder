@@ -30,10 +30,13 @@ const buildControls = props => {
       ))}
 
       {/* Button para mostrar o modal */}
-      <button className={classes.OrderButton} disabled={!props.purchasable}
-      // onclick vai alterar o estado de 'purchasing' no componente burger builder
-      onClick={props.purchasing}>
-        Order Now
+      <button
+        className={classes.OrderButton}
+        disabled={!props.purchasable}
+        // onclick vai alterar o estado de 'purchasing' no componente burger builder
+        onClick={props.purchasing}
+      >
+        {props.isAuth ? "ORDER NOW" : "SIGN UP TO ORDER"}
       </button>
     </div>
   );

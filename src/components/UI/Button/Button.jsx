@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Button.css';
 
-const button = (props) => {
+const Button = (props) => {
   return (
     <button 
     // buttonType = 'Danger' || 'Success'
@@ -12,4 +12,4 @@ const button = (props) => {
   );
 }
 
-export default button; 
+export default Button; 

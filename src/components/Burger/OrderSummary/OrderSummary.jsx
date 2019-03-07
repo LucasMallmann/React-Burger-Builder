@@ -1,6 +1,4 @@
 import React from "react";
-
-import Aux from "../../../hoc/Aux";
 import Button from "../../UI/Button/Button";
 
 import classes from "./OrderSummary.css";
@@ -17,7 +15,7 @@ const orderSummary = props => {
   });
 
   return (
-    <Aux>
+    <div>
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients</p>
       <ul>{ingredientsSummary}</ul>
@@ -35,7 +33,8 @@ const orderSummary = props => {
       <Button btnType="Success" clicked={props.purchaseContinue}>
         CONTINUE
       </Button>
-    </Aux>
+      {/* </Link> */}
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import React from "react";
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Backdrop from "../../UI/Backdrop/Backdrop";
-import Aux from "../../../hoc/Aux";
 
 // CSS CLASSES
 import classes from "./Sidedrawer.css";
@@ -12,7 +11,7 @@ const sideDrawer = props => {
   let openCloseToogle = props.open ? classes.Open : classes.Close;
 
   return (
-    <Aux>
+    <div>
       <Backdrop show={props.open} clicked={props.closed} />
 
       <div
@@ -26,7 +25,7 @@ const sideDrawer = props => {
           <NavigationItems isAuthenticated={props.isAuth} />
         </nav>
       </div>
-    </Aux>
+    </div>
   );
 };
 

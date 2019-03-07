@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Aux from "../../hoc/Aux";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 import SideDrawer from "../Navigation/Sidedrawer/Sidedrawer";
 
@@ -26,7 +25,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <Aux>
+      <div>
         <Toolbar
           drawerToggleClick={this.sideDrawerToggleHandler}
           isAuth={this.props.isAuthenticated}
@@ -38,7 +37,7 @@ class Layout extends Component {
         />
 
         <main className={classes.Content}>{this.props.children}</main>
-      </Aux>
+      </div>
     );
   }
 }

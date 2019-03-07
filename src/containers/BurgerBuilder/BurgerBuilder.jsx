@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import * as actionTypes from '../../store/actions';
 
 import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger/Burger";
@@ -20,7 +21,6 @@ class BurgerBuilder extends Component {
   componentDidMount() {
     this.props.onFetchInitIngredients();
   }
-
   updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
       .map(ingredientKey => {
@@ -51,7 +51,8 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     this.props.onInitPurchasing();
     this.props.history.push({ pathname: "/checkout" });
-  };
+  }
+
 
   render() {
     // Faz uma cópia do state
@@ -72,7 +73,7 @@ class BurgerBuilder extends Component {
 
     if (this.props.ingredients) {
       burger = (
-        <Aux>
+        <div>
           <Burger ingredients={this.props.ingredients} />
 
           {/* Botões para add ou remover ingredientes */}
@@ -86,7 +87,7 @@ class BurgerBuilder extends Component {
             // ALTERAR O ESTADO DE COMPRANDO, PARA SUMIR COM O MODAL
             purchasing={this.purchaseHandlers}
           />
-        </Aux>
+        </div>
       );
 
       orderSummary = (
@@ -100,7 +101,7 @@ class BurgerBuilder extends Component {
     }
 
     return (
-      <Aux>
+      <div>
         <Modal
           show={this.state.purchasing}
           modalClosed={this.purchaseCancelHandler}
@@ -109,7 +110,7 @@ class BurgerBuilder extends Component {
         </Modal>
 
         {burger}
-      </Aux>
+      </div>
     );
   }
 }
